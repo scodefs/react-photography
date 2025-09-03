@@ -278,35 +278,6 @@ const About = () => {
           </div>
         </div>
 
-        {/* Interests Section */}
-        <div
-          className={`mb-20 transition-all duration-1000 delay-900 ${
-            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-          }`}
-        >
-          <h3 className="text-3xl font-bold text-center text-neutral-800 mb-12">
-            Personal Interests
-          </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {interests.map((interest, index) => (
-              <div
-                key={interest.name}
-                className="group bg-white/60 backdrop-blur-sm border border-neutral-200/40 rounded-2xl p-6 text-center hover:bg-white/80 hover:shadow-lg hover:scale-105 transition-all duration-300"
-              >
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <interest.icon className="w-8 h-8 text-white" />
-                </div>
-                <h4 className="font-semibold text-neutral-800 mb-2">
-                  {interest.name}
-                </h4>
-                <p className="text-sm text-neutral-600">
-                  {interest.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Achievements */}
         <div
           className={`text-center transition-all duration-1000 delay-1100 ${

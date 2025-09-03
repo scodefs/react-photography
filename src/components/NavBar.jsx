@@ -53,17 +53,25 @@ const NavBar = () => {
     };
   }, [sidebarOpen]);
 
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const navigationItems = [
     { id: "home", name: "Home", icon: Home, href: "#" },
     { id: "about", name: "About", icon: User, href: "#about" },
     { id: "portfolio", name: "Portfolio", icon: BookOpen, href: "#portfolio" },
-    { id: "services", name: "Services", icon: Camera, href: "#services" },
+
     {
       id: "testimonial",
       name: "Testimonial",
       icon: Heart,
       href: "#testimonial",
     },
+    { id: "services", name: "Services", icon: Camera, href: "#services" },
   ];
 
   const socialLinks = [
@@ -108,8 +116,8 @@ const NavBar = () => {
     { name: "Home", href: "#" },
     { name: "About", href: "#about" },
     { name: "Portfolio", href: "#portfolio" },
-    { name: "Services", href: "#services" },
     { name: "Testimonial", href: "#testimonial" },
+    { name: "Services", href: "#services" },
   ];
 
   return (
@@ -184,7 +192,10 @@ const NavBar = () => {
               <div className="w-px h-8 bg-neutral-200/60 mx-2" />
 
               {/* CTA Button - Matching Hero Gradient */}
-              <button className="btn-primary flex items-center space-x-2">
+              <button
+                className="btn-primary flex items-center space-x-2"
+                onClick={() => scrollToSection("services")}
+              >
                 Book Session
               </button>
             </div>
@@ -360,12 +371,6 @@ const NavBar = () => {
                     </a>
                   ))}
                 </div>
-
-                {/* CTA Button */}
-                <button className="btn-primary w-full flex items-center justify-center space-x-2">
-                  <Heart className="w-5 h-5" />
-                  <span>Book Your Wedding</span>
-                </button>
               </div>
             </div>
 
