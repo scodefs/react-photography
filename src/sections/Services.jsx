@@ -646,14 +646,14 @@ const Services = () => {
                   setSelectedService(selectedServiceDetails.id);
                   setSelectedServiceDetails(null);
                 }}
-                className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-primary-500/30 transition-all duration-300 flex items-center justify-center space-x-2"
+                className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-primary-500/30 hover:cursor-pointer transition-all duration-300 flex items-center justify-center space-x-2"
               >
                 <Heart className="w-5 h-5" />
                 <span>Select This Package</span>
               </button>
               <button
                 onClick={() => setSelectedServiceDetails(null)}
-                className="px-6 py-3 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 rounded-xl font-semibold transition-all duration-200"
+                className="px-6 py-3 bg-neutral-100 hover:bg-neutral-200 hover:cursor-pointer text-neutral-700 rounded-xl font-semibold transition-all duration-200"
               >
                 Close
               </button>
