@@ -255,31 +255,6 @@
   @apply text-text-muted;
 }
 
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-background: #0c0a09;
-    --color-background-secondary: #1c1917;
-    --color-background-tertiary: #292524;
-    --color-background-accent: #500724;
-
-    --color-text-primary: #fafafa;
-    --color-text-secondary: #e7e5e4;
-    --color-text-tertiary: #d6d3d1;
-    --color-text-muted: #a8a29e;
-    --color-text-inverse: #1c1917;
-
-    --color-surface-primary: #1c1917;
-    --color-surface-secondary: #292524;
-    --color-surface-elevated: #44403c;
-    --color-surface-accent: #500724;
-
-    --color-border-light: #292524;
-    --color-border-medium: #44403c;
-    --color-border-dark: #57534e;
-  }
-}
-
 /* Base Styles */
 @layer base {
   html,

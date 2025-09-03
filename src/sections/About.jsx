@@ -160,8 +160,12 @@ const About = () => {
               {/* Main Photo Container */}
               <div className="relative bg-white/90 backdrop-blur-sm border border-neutral-200/50 rounded-3xl p-8 shadow-2xl">
                 {/* Profile Photo Placeholder */}
-                <div className="w-64 h-80 bg-gradient-to-br from-neutral-200 to-neutral-300 rounded-2xl mx-auto mb-6 flex items-center justify-center relative overflow-hidden">
-                  <div className="text-6xl text-neutral-400">👩‍💼</div>
+                <div className="w-64 h-80 rounded-2xl mx-auto mb-6 relative overflow-hidden">
+                  <img
+                    src="/Israa-img.jpeg"
+                    alt="Israa El Mousa - Wedding Photographer"
+                    className="w-full h-full object-cover rounded-2xl"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary-500/20 to-transparent rounded-2xl" />
                 </div>
 

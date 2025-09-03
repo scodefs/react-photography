@@ -61,7 +61,7 @@ const NavBar = () => {
   };
 
   const navigationItems = [
-    { id: "home", name: "Home", icon: Home, href: "#" },
+    { id: "home", name: "Home", icon: Home, href: "#home" },
     { id: "about", name: "About", icon: User, href: "#about" },
     { id: "portfolio", name: "Portfolio", icon: BookOpen, href: "#portfolio" },
 
@@ -113,7 +113,7 @@ const NavBar = () => {
   };
 
   const navItems = [
-    { name: "Home", href: "#" },
+    { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
     { name: "Portfolio", href: "#portfolio" },
     { name: "Testimonial", href: "#testimonial" },
