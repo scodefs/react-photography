@@ -489,10 +489,6 @@ const Services = () => {
                       name="guestCount"
                       value={formData.guestCount}
                       onChange={handleInputChange}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedServiceDetails(service);
-                      }}
                       className="mt-2 px-3 py-1 text-xs font-medium text-primary-600 border border-primary-200 rounded-lg hover:bg-primary-50 hover:border-primary-300 hover:cursor-pointer transition-all duration-200"
                     >
                       <option value="">Select...</option>
