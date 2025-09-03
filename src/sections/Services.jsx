@@ -542,7 +542,7 @@ const Services = () => {
                   disabled={isSubmitting || !selectedService}
                   className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center space-x-2"
                 >
-                 className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-primary-500/30 hover:cursor-pointer transition-all duration-300 flex items-center justify-center space-x-2"
+                  {isSubmitting ? (
                     <>
                       <div className="animate-spin w-5 h-5 border-2 border-white/30 border-t-white rounded-full"></div>
                       <span>Booking...</span>
@@ -556,7 +556,7 @@ const Services = () => {
                 </button>
 
                 {/* Status Messages */}
-                 className="px-6 py-3 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 rounded-xl font-semibold hover:cursor-pointer transition-all duration-200"
+                {submitStatus === "success" && (
                   <div className="flex items-center space-x-2 text-green-600 bg-green-50 p-4 rounded-xl">
                     <CheckCircle className="w-5 h-5" />
                     <span className="font-medium">
