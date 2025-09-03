@@ -19,7 +19,6 @@ import {
 const Services = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [selectedServiceDetails, setSelectedServiceDetails] = useState(null);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedService, setSelectedService] = useState("");
@@ -81,14 +80,6 @@ const Services = () => {
       duration: "30 min",
       price: "Free",
       icon: MessageSquare,
-      description: "A complimentary consultation to discuss your wedding vision, photography style preferences, and answer any questions you may have.",
-      includes: [
-        "30-minute video or in-person meeting",
-        "Discussion of your wedding timeline",
-        "Photography style consultation",
-        "Package recommendations",
-        "No obligation or pressure"
-      ]
     },
     {
       id: "engagement",
@@ -96,14 +87,6 @@ const Services = () => {
       duration: "2 hours",
       price: "£250",
       icon: Heart,
-      description: "A romantic engagement photo session to capture your love story before the big day. Perfect for save-the-dates and getting comfortable with your photographer.",
-      includes: [
-        "2-hour photo session",
-        "50+ edited high-resolution images",
-        "Online gallery for easy sharing",
-        "Print release included",
-        "Location scouting assistance"
-      ]
     },
     {
       id: "wedding-basic",
@@ -111,15 +94,6 @@ const Services = () => {
       duration: "6 hours",
       price: "£480",
       icon: Camera,
-      description: "Essential wedding day coverage capturing your ceremony and reception highlights with professional editing and delivery.",
-      includes: [
-        "6 hours of wedding day coverage",
-        "200+ edited high-resolution images",
-        "Online gallery with download access",
-        "USB drive with all photos",
-        "Print release included",
-        "Basic photo editing and color correction"
-      ]
     },
     {
       id: "wedding-pro",
@@ -127,17 +101,6 @@ const Services = () => {
       duration: "8 hours",
       price: "£960",
       icon: Star,
-      description: "Comprehensive wedding day coverage from getting ready to reception dancing, with premium editing and additional deliverables.",
-      includes: [
-        "8 hours of wedding day coverage",
-        "400+ edited high-resolution images",
-        "Online gallery with sharing options",
-        "USB drive + backup cloud storage",
-        "Print release included",
-        "Advanced photo editing and retouching",
-        "Sneak peek photos within 48 hours",
-        "Complimentary engagement session"
-      ]
     },
     {
       id: "wedding-exclusive",
@@ -145,20 +108,6 @@ const Services = () => {
       duration: "Full Day",
       price: "£1600",
       icon: Crown,
-      description: "The ultimate wedding photography experience with full day coverage, premium albums, and exclusive personalized service.",
-      includes: [
-        "12+ hours of wedding day coverage",
-        "600+ edited high-resolution images",
-        "Premium online gallery with client app",
-        "Custom USB drive in elegant packaging",
-        "Print release included",
-        "Professional retouching for all images",
-        "Same-day sneak peek photos",
-        "Complimentary engagement session",
-        "Custom wedding album (50 pages)",
-        "Second photographer for ceremony",
-        "Priority booking and planning support"
-      ]
     },
   ];
 
@@ -489,7 +438,7 @@ const Services = () => {
                       name="guestCount"
                       value={formData.guestCount}
                       onChange={handleInputChange}
-                      className="mt-2 px-3 py-1 text-xs font-medium text-primary-600 border border-primary-200 rounded-lg hover:bg-primary-50 hover:border-primary-300 hover:cursor-pointer transition-all duration-200"
+                      className="w-full px-4 py-3 bg-white/80 border border-neutral-200 rounded-xl focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all duration-300"
                     >
                       <option value="">Select...</option>
                       <option value="1-50">1-50 guests</option>
@@ -574,95 +523,6 @@ const Services = () => {
           </div>
         </div>
       </div>
-
-      {/* Service Details Modal */}
-      {selectedServiceDetails && (
-        <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-6"
-          onClick={() => setSelectedServiceDetails(null)}
-        >
-          <div
-            className="bg-white rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Header */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
-                  <selectedServiceDetails.icon className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-neutral-800">
-                    {selectedServiceDetails.name}
-                  </h3>
-                  <div className="flex items-center space-x-4 text-sm text-neutral-600">
-                    <span className="flex items-center space-x-1">
-                      <Clock className="w-4 h-4" />
-                      <span>{selectedServiceDetails.duration}</span>
-                    </span>
-                    <span className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                      {selectedServiceDetails.price}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <button
-                onClick={() => setSelectedServiceDetails(null)}
-                className="w-10 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-xl flex items-center justify-center text-neutral-600 hover:text-neutral-800 transition-all duration-200"
-              >
-                ×
-              </button>
-            </div>
-
-            {/* Service Description */}
-            <div className="mb-8">
-              <h4 className="text-lg font-semibold text-neutral-800 mb-3">
-                About This Package
-              </h4>
-              <p className="text-neutral-600 leading-relaxed">
-                {selectedServiceDetails.description}
-              </p>
-            </div>
-
-            {/* What's Included */}
-            <div className="mb-8">
-              <h4 className="text-lg font-semibold text-neutral-800 mb-4">
-                What's Included
-              </h4>
-              <div className="space-y-3">
-                {selectedServiceDetails.includes.map((item, index) => (
-                  <div key={index} className="flex items-center space-x-3">
-                    <div className="w-6 h-6 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-4 h-4 text-white" />
-                    </div>
-                    <span className="text-neutral-700">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button
-                onClick={() => {
-                  setSelectedService(selectedServiceDetails.id);
-                  setSelectedServiceDetails(null);
-                }}
-                className="flex-1 btn-primary"
-              >
-                <Heart className="w-5 h-5" />
-                <span>Select This Package</span>
-              </button>
-              <button
-                onClick={() => setSelectedServiceDetails(null)}
-                className="flex-1 btn-secondary"
-              >
-                <span>Close</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };
