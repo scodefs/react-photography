@@ -344,7 +344,7 @@ const Services = () => {
                       <p className="font-bold text-lg bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
                         {service.price}
                       </p>
-                      <button 
+                      <button
                         className="mt-2 px-3 py-1 text-xs font-medium text-primary-600 border border-primary-200 rounded-lg hover:bg-primary-50 hover:border-primary-300 hover:cursor-pointer transition-all duration-200"
                         onClick={(e) => {
                           e.stopPropagation();
