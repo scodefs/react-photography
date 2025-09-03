@@ -14,6 +14,8 @@ import {
   Send,
   CheckCircle,
   AlertCircle,
+  X,
+  Info,
 } from "lucide-react";
 
 const Services = () => {
@@ -22,6 +24,7 @@ const Services = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedService, setSelectedService] = useState("");
+  const [selectedServiceDetails, setSelectedServiceDetails] = useState(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -80,6 +83,14 @@ const Services = () => {
       duration: "30 min",
       price: "Free",
       icon: MessageSquare,
+      description: "Get to know each other and discuss your wedding photography needs in a relaxed, no-pressure environment.",
+      includes: [
+        "30-minute video call or in-person meeting",
+        "Discussion of your wedding timeline and vision",
+        "Review of photography styles and preferences",
+        "Custom package recommendations",
+        "No obligation or pressure to book"
+      ]
     },
     {
       id: "engagement",
@@ -87,6 +98,15 @@ const Services = () => {
       duration: "2 hours",
       price: "£250",
       icon: Heart,
+      description: "A romantic pre-wedding photoshoot to capture your love story and get comfortable with your photographer.",
+      includes: [
+        "2-hour engagement photoshoot",
+        "Choice of location (outdoor or studio)",
+        "50+ edited high-resolution images",
+        "Online gallery for easy sharing",
+        "Print release for personal use",
+        "Perfect for save-the-dates and wedding websites"
+      ]
     },
     {
       id: "wedding-basic",
@@ -94,6 +114,15 @@ const Services = () => {
       duration: "6 hours",
       price: "£480",
       icon: Camera,
+      description: "Essential wedding day coverage capturing your ceremony and reception highlights.",
+      includes: [
+        "6 hours of wedding day coverage",
+        "Ceremony and reception photography",
+        "200+ edited high-resolution images",
+        "Online gallery with download access",
+        "Basic photo editing and color correction",
+        "USB drive with all images"
+      ]
     },
     {
       id: "wedding-pro",
@@ -101,6 +130,16 @@ const Services = () => {
       duration: "8 hours",
       price: "£960",
       icon: Star,
+      description: "Comprehensive wedding coverage from getting ready to the dance floor with premium editing.",
+      includes: [
+        "8 hours of wedding day coverage",
+        "Getting ready, ceremony, and reception",
+        "400+ edited high-resolution images",
+        "Premium photo editing and retouching",
+        "Online gallery with sharing options",
+        "USB drive and backup cloud storage",
+        "Sneak peek photos within 48 hours"
+      ]
     },
     {
       id: "wedding-exclusive",
@@ -108,6 +147,17 @@ const Services = () => {
       duration: "Full Day",
       price: "£1600",
       icon: Crown,
+      description: "The ultimate wedding photography experience with unlimited coverage and luxury service.",
+      includes: [
+        "Unlimited hours of coverage",
+        "Second photographer included",
+        "Engagement session included",
+        "600+ edited high-resolution images",
+        "Premium album design and printing",
+        "Same-day sneak peek photos",
+        "Priority editing and delivery",
+        "Complimentary consultation and planning"
+      ]
     },
   ];
 
@@ -523,6 +573,87 @@ const Services = () => {
           </div>
         </div>
       </div>
+
+      {/* Service Details Modal */}
+      {selectedServiceDetails && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div 
+            className="bg-white/95 backdrop-blur-sm border border-neutral-200/50 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-neutral-200/50">
+              <div className="flex items-center space-x-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
+                  <selectedServiceDetails.icon className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-neutral-800">
+                    {selectedServiceDetails.name}
+                  </h3>
+                  <p className="text-sm text-neutral-600">
+                    {selectedServiceDetails.duration} • {selectedServiceDetails.price}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedServiceDetails(null)}
+                className="w-10 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-xl flex items-center justify-center text-neutral-600 hover:text-neutral-800 transition-all duration-200"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 space-y-6">
+              {/* Description */}
+              <div>
+                <h4 className="text-lg font-semibold text-neutral-800 mb-3">
+                  Package Description
+                </h4>
+                <p className="text-neutral-600 leading-relaxed">
+                  {selectedServiceDetails.description}
+                </p>
+              </div>
+
+              {/* What's Included */}
+              <div>
+                <h4 className="text-lg font-semibold text-neutral-800 mb-4">
+                  What's Included
+                </h4>
+                <div className="space-y-3">
+                  {selectedServiceDetails.includes.map((item, index) => (
+                    <div key={index} className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-primary-600 mt-0.5 flex-shrink-0" />
+                      <span className="text-neutral-700">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                <button
+                  onClick={() => {
+                    setSelectedService(selectedServiceDetails.id);
+                    setSelectedServiceDetails(null);
+                  }}
+                  className="flex-1 bg-gradient-to-r from-primary-600 to-secondary-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-primary-500/30 transition-all duration-300 flex items-center justify-center space-x-2"
+                >
+                  <Heart className="w-5 h-5" />
+                  <span>Select This Package</span>
+                </button>
+                <button
+                  onClick={() => setSelectedServiceDetails(null)}
+                  className="px-6 py-3 bg-white border border-neutral-200 text-neutral-700 rounded-xl font-semibold hover:bg-neutral-50 hover:border-neutral-300 transition-all duration-300"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
