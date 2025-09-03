@@ -1,0 +1,512 @@
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Camera,
+  Heart,
+  MapPin,
+  Calendar,
+  Award,
+  Users,
+  Star,
+  Eye,
+  ArrowRight,
+  Filter,
+} from "lucide-react";
+
+const Portfolio = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("all");
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 20,
+        y: (e.clientY / window.innerHeight) * 20,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      observer.disconnect();
+    };
+  }, []);
+
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const portfolioProjects = [
+    {
+      id: 1,
+      title: "Sarah & Michael's Garden Wedding",
+      category: "outdoor",
+      location: "Napa Valley, CA",
+      date: "June 2024",
+      guests: 150,
+      rating: 5,
+      description:
+        "An enchanting garden ceremony with golden hour portraits and romantic sunset reception.",
+      testimonial:
+        "Sarah captured every magical moment perfectly. The photos exceeded our wildest dreams!",
+      tags: ["Garden", "Golden Hour", "Romantic"],
+      featured: true,
+      imageColor: "from-green-400/20 to-primary-300/15",
+    },
+    {
+      id: 2,
+      title: "Emma & James Beach Ceremony",
+      category: "beach",
+      location: "Monterey Bay, CA",
+      date: "August 2024",
+      guests: 80,
+      rating: 5,
+      description:
+        "Intimate beachside vows with ocean breeze and stunning coastal backdrops.",
+      testimonial:
+        "The sunset photos by the ocean are absolutely breathtaking. Pure perfection!",
+      tags: ["Beach", "Intimate", "Sunset"],
+      featured: false,
+      imageColor: "from-blue-400/20 to-secondary-300/15",
+    },
+    {
+      id: 3,
+      title: "Olivia & David Vineyard Celebration",
+      category: "vineyard",
+      location: "Sonoma County, CA",
+      date: "September 2024",
+      guests: 200,
+      rating: 5,
+      description:
+        "Elegant vineyard wedding with rustic charm and spectacular wine country views.",
+      testimonial:
+        "Every single photo tells our love story beautifully. We're beyond grateful!",
+      tags: ["Vineyard", "Elegant", "Rustic"],
+      featured: true,
+      imageColor: "from-purple-400/20 to-accent-300/15",
+    },
+    {
+      id: 4,
+      title: "Sophia & Ryan City Wedding",
+      category: "urban",
+      location: "San Francisco, CA",
+      date: "October 2024",
+      guests: 120,
+      rating: 5,
+      description:
+        "Modern urban ceremony with skyline views and sophisticated city elegance.",
+      testimonial:
+        "Sarah's artistic eye captured the urban romance we envisioned perfectly.",
+      tags: ["Urban", "Modern", "Skyline"],
+      featured: false,
+      imageColor: "from-gray-400/20 to-primary-300/15",
+    },
+    {
+      id: 5,
+      title: "Isabella & Marcus Forest Wedding",
+      category: "outdoor",
+      location: "Redwood National Park, CA",
+      date: "May 2024",
+      guests: 100,
+      rating: 5,
+      description:
+        "Magical forest ceremony surrounded by towering redwoods and natural beauty.",
+      testimonial:
+        "The forest setting created such a fairytale atmosphere. Absolutely stunning!",
+      tags: ["Forest", "Natural", "Magical"],
+      featured: false,
+      imageColor: "from-green-400/20 to-secondary-300/15",
+    },
+    {
+      id: 6,
+      title: "Grace & Alexander Manor Wedding",
+      category: "indoor",
+      location: "Historic Manor, Napa",
+      date: "November 2024",
+      guests: 180,
+      rating: 5,
+      description:
+        "Classic indoor celebration with timeless elegance and vintage charm.",
+      testimonial:
+        "Every detail was captured with such artistry and attention. Perfection!",
+      tags: ["Classic", "Indoor", "Elegant"],
+      featured: true,
+      imageColor: "from-amber-400/20 to-accent-300/15",
+    },
+  ];
+
+  const filterCategories = [
+    { id: "all", name: "All Weddings", count: portfolioProjects.length },
+    {
+      id: "outdoor",
+      name: "Outdoor",
+      count: portfolioProjects.filter((p) => p.category === "outdoor").length,
+    },
+    {
+      id: "beach",
+      name: "Beach",
+      count: portfolioProjects.filter((p) => p.category === "beach").length,
+    },
+    {
+      id: "vineyard",
+      name: "Vineyard",
+      count: portfolioProjects.filter((p) => p.category === "vineyard").length,
+    },
+    {
+      id: "urban",
+      name: "Urban",
+      count: portfolioProjects.filter((p) => p.category === "urban").length,
+    },
+    {
+      id: "indoor",
+      name: "Indoor",
+      count: portfolioProjects.filter((p) => p.category === "indoor").length,
+    },
+  ];
+
+  const filteredProjects =
+    activeFilter === "all"
+      ? portfolioProjects
+      : portfolioProjects.filter(
+          (project) => project.category === activeFilter
+        );
+
+  const featuredProjects = portfolioProjects.filter(
+    (project) => project.featured
+  );
+
+  return (
+    <section
+      ref={sectionRef}
+      id="portfolio"
+      className="py-20 lg:py-32 bg-gradient-to-br from-white via-primary-50/30 to-secondary-50/20 relative overflow-hidden"
+    >
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div
+          className="absolute w-96 h-96 bg-gradient-to-br from-primary-200/15 to-secondary-200/10 rounded-full blur-3xl"
+          style={{
+            transform: `translate(${mousePosition.x * 0.4}px, ${
+              mousePosition.y * 0.3
+            }px)`,
+            transition: "transform 0.8s ease-out",
+            left: "5%",
+            top: "10%",
+          }}
+        />
+        <div
+          className="absolute w-80 h-80 bg-gradient-to-br from-accent-300/12 to-primary-200/8 rounded-full blur-3xl"
+          style={{
+            transform: `translate(${mousePosition.x * -0.3}px, ${
+              mousePosition.y * -0.4
+            }px)`,
+            transition: "transform 0.8s ease-out",
+            right: "10%",
+            bottom: "15%",
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto px-6 sm:px-8 lg:px-12 max-w-7xl">
+        {/* Section Header */}
+        <div
+          className={`text-center mb-16 lg:mb-20 transition-all duration-1000 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+          }`}
+        >
+          <div className="inline-flex items-center space-x-2 bg-white/70 backdrop-blur-sm border border-primary-200/60 rounded-full px-6 py-3 mb-8">
+            <Camera className="w-5 h-5 text-primary-600" />
+            <span className="text-sm font-semibold text-neutral-700">
+              Wedding Portfolio
+            </span>
+          </div>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+              Recent
+            </span>
+            <span className="text-neutral-800"> Work</span>
+          </h2>
+          <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
+            Explore a collection of beautiful wedding celebrations I've had the
+            honor to capture across California
+          </p>
+        </div>
+
+        {/* Filter Buttons */}
+        <div
+          className={`flex flex-wrap justify-center gap-3 mb-16 transition-all duration-1000 delay-200 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+          }`}
+        >
+          {filterCategories.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => setActiveFilter(category.id)}
+              className={`flex items-center space-x-2 px-6 py-3 rounded-full font-semibold text-sm hover:cursor-pointer transition-all duration-300 ${
+                activeFilter === category.id
+                  ? "bg-gradient-to-r from-primary-500 to-secondary-500 text-white shadow-lg shadow-primary-500/30"
+                  : "bg-white/70 backdrop-blur-sm border border-neutral-200/50 text-neutral-700 hover:bg-white hover:shadow-md"
+              }`}
+            >
+              <Filter className="w-4 h-4" />
+              <span>{category.name}</span>
+              <span
+                className={`text-xs px-2 py-1 rounded-full ${
+                  activeFilter === category.id
+                    ? "bg-white/20"
+                    : "bg-primary-100 text-primary-700"
+                }`}
+              >
+                {category.count}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {/* Featured Projects Highlight */}
+        <div
+          className={`mb-20 transition-all duration-1000 delay-400 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+          }`}
+        >
+          <h3 className="text-2xl font-bold text-neutral-800 mb-8 text-center">
+            Featured Celebrations
+          </h3>
+          <div className="grid lg:grid-cols-3 gap-8">
+            {featuredProjects.slice(0, 3).map((project, index) => (
+              <div
+                key={project.id}
+                className="group relative bg-white/80 backdrop-blur-sm border border-neutral-200/50 rounded-3xl p-6 hover:shadow-2xl hover:scale-105 transition-all duration-500 cursor-pointer"
+                onClick={() => setSelectedProject(project)}
+              >
+                {/* Project Image Placeholder */}
+                <div
+                  className={`h-64 bg-gradient-to-br ${project.imageColor} rounded-2xl mb-6 flex items-center justify-center relative overflow-hidden`}
+                >
+                  <div className="text-4xl">📸</div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
+                    <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                    <span className="text-sm font-bold text-neutral-800">
+                      {project.rating}
+                    </span>
+                  </div>
+                  <div className="absolute inset-0 bg-primary-500/0 group-hover:bg-primary-500/10 transition-colors duration-300 rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100">
+                    <div className="bg-white/90 backdrop-blur-sm rounded-full p-3">
+                      <Eye className="w-6 h-6 text-primary-600" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Project Info */}
+                <div className="space-y-4">
+                  <h4 className="text-xl font-bold text-neutral-800 group-hover:text-primary-600 transition-colors">
+                    {project.title}
+                  </h4>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs bg-primary-100 text-primary-700 px-3 py-1 rounded-full"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center justify-between text-sm text-neutral-600">
+                    <div className="flex items-center space-x-1">
+                      <MapPin className="w-4 h-4" />
+                      <span>{project.location}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <Users className="w-4 h-4" />
+                      <span>{project.guests} guests</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Featured Badge */}
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-accent-500 to-primary-500 rounded-full flex items-center justify-center animate-pulse">
+                  <Heart className="w-4 h-4 text-white fill-current" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* All Projects Grid */}
+        <div
+          className={`transition-all duration-1000 delay-600 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+          }`}
+        >
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-2xl font-bold text-neutral-800">
+              {activeFilter === "all"
+                ? "All Weddings"
+                : `${
+                    filterCategories.find((c) => c.id === activeFilter)?.name
+                  } Weddings`}
+            </h3>
+            <span className="text-neutral-600">
+              {filteredProjects.length} projects
+            </span>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProjects.map((project, index) => (
+              <div
+                key={project.id}
+                className="group bg-white/70 backdrop-blur-sm border border-neutral-200/40 rounded-2xl overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                onClick={() => setSelectedProject(project)}
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {/* Project Image */}
+                <div
+                  className={`h-48 bg-gradient-to-br ${project.imageColor} relative overflow-hidden flex items-center justify-center`}
+                >
+                  <div className="text-3xl">📷</div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="flex items-center justify-between">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                        <span className="text-xs font-bold text-neutral-800">
+                          {project.date}
+                        </span>
+                      </div>
+                      <div className="flex space-x-1">
+                        {[...Array(project.rating)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className="w-3 h-3 text-yellow-400 fill-current"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-primary-600/0 group-hover:bg-primary-600/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                    <div className="bg-white/90 backdrop-blur-sm rounded-full p-2">
+                      <ArrowRight className="w-5 h-5 text-primary-600" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Project Details */}
+                <div className="p-6 space-y-3">
+                  <h4 className="font-bold text-lg text-neutral-800 group-hover:text-primary-600 transition-colors line-clamp-2">
+                    {project.title}
+                  </h4>
+
+                  <p className="text-sm text-neutral-600 line-clamp-2">
+                    {project.description}
+                  </p>
+
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="flex items-center space-x-1 text-xs text-neutral-500">
+                      <MapPin className="w-3 h-3" />
+                      <span>{project.location}</span>
+                    </div>
+                    <div className="flex items-center space-x-1 text-xs text-neutral-500">
+                      <Users className="w-3 h-3" />
+                      <span>{project.guests}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div
+          className={`text-center mt-20 transition-all duration-1000 delay-800 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+          }`}
+        >
+          <div className="bg-gradient-to-r from-primary-50/80 to-secondary-50/60 backdrop-blur-sm rounded-3xl p-8 lg:p-12 border border-primary-200/30">
+            <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <Award className="w-10 h-10 text-white" />
+            </div>
+            <h3 className="text-3xl font-bold text-neutral-800 mb-4">
+              Ready to Create Your Story?
+            </h3>
+            <p className="text-lg text-neutral-600 mb-8 max-w-2xl mx-auto">
+              Let's capture the magic of your special day with the same care and
+              artistry shown in these celebrations.
+            </p>
+            <button
+              className="btn-primary inline-flex items-center space-x-3"
+              onClick={() => scrollToSection("services")}
+            >
+              <Camera className="w-6 h-6" />
+              <span>Book Your Wedding</span>
+              <ArrowRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Project Modal Preview - Simplified for this example */}
+      {selectedProject && (
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-6"
+          onClick={() => setSelectedProject(null)}
+        >
+          <div
+            className="bg-white rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-center space-y-4">
+              <h3 className="text-2xl font-bold text-neutral-800">
+                {selectedProject.title}
+              </h3>
+              <div
+                className={`h-64 bg-gradient-to-br ${selectedProject.imageColor} rounded-2xl flex items-center justify-center`}
+              >
+                <div className="text-6xl">📸</div>
+              </div>
+              <p className="text-neutral-600">{selectedProject.description}</p>
+              <div className="bg-primary-50 rounded-xl p-4">
+                <p className="text-sm italic text-neutral-700">
+                  "{selectedProject.testimonial}"
+                </p>
+              </div>
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-all duration-300"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
+
+export default Portfolio;
