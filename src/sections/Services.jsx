@@ -579,6 +579,88 @@ const Services = () => {
           </div>
         </div>
       </div>
+
+      {/* Service Details Modal */}
+      {selectedServiceDetails && (
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-6"
+          onClick={() => setSelectedServiceDetails(null)}
+        >
+          <div
+            className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
+                  <selectedServiceDetails.icon className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-neutral-800">
+                    {selectedServiceDetails.name}
+                  </h3>
+                  <div className="flex items-center space-x-4 text-sm text-neutral-600">
+                    <span>{selectedServiceDetails.duration}</span>
+                    <span className="font-bold text-lg bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                      {selectedServiceDetails.price}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={() => setSelectedServiceDetails(null)}
+                className="w-10 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-xl flex items-center justify-center text-neutral-600 hover:text-neutral-800 transition-all duration-200"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Service Description */}
+            <div className="mb-6">
+              <p className="text-neutral-700 leading-relaxed">
+                {selectedServiceDetails.description}
+              </p>
+            </div>
+
+            {/* What's Included */}
+            <div className="mb-8">
+              <h4 className="text-lg font-bold text-neutral-800 mb-4 flex items-center space-x-2">
+                <CheckCircle className="w-5 h-5 text-green-500" />
+                <span>What's Included</span>
+              </h4>
+              <div className="space-y-3">
+                {selectedServiceDetails.includes.map((item, index) => (
+                  <div key={index} className="flex items-start space-x-3">
+                    <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span className="text-neutral-700 text-sm">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={() => {
+                  setSelectedService(selectedServiceDetails.id);
+                  setSelectedServiceDetails(null);
+                }}
+                className="flex-1 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-primary-500/30 transition-all duration-300 flex items-center justify-center space-x-2"
+              >
+                <Heart className="w-5 h-5" />
+                <span>Select This Package</span>
+              </button>
+              <button
+                onClick={() => setSelectedServiceDetails(null)}
+                className="px-6 py-3 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 rounded-xl font-semibold transition-all duration-200"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
