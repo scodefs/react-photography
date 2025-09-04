@@ -610,7 +610,7 @@ const Services = () => {
               </div>
               <button
                 onClick={() => setSelectedServiceDetails(null)}
-                className="w-10 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-xl flex items-center justify-center text-neutral-600 hover:text-neutral-800 transition-all duration-200"
+                className="w-10 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-xl flex items-center justify-center text-neutral-600 hover:text-neutral-800 hover:cursor-pointer transition-all duration-200"
               >
                 <X className="w-5 h-5" />
               </button>
