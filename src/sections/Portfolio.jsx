@@ -123,6 +123,22 @@ const Portfolio = () => {
     },
     {
       id: 5,
+      title: "Sandy & Henry Garden Wedding",
+      category: "outdoor",
+      location: "Botanical Gardens, London",
+      date: "July 2024",
+      guests: 120,
+      rating: 5,
+      description:
+        "Romantic garden celebration with lush greenery, blooming flowers, and intimate outdoor ceremony.",
+      testimonial:
+        "The garden setting was captured so beautifully! Every photo feels like a fairytale.",
+      tags: ["Garden", "Romantic", "Flowers"],
+      featured: false,
+      imageColor: "from-emerald-400/20 to-green-300/15",
+    },
+    {
+      id: 6,
       title: "Isabella & Marcus Forest Wedding",
       category: "outdoor",
       location: "Redwood National Park, CA",
@@ -138,7 +154,7 @@ const Portfolio = () => {
       imageColor: "from-green-400/20 to-secondary-300/15",
     },
     {
-      id: 6,
+      id: 7,
       title: "Grace & Alexander Manor Wedding",
       category: "indoor",
       location: "Historic Manor, Napa",
