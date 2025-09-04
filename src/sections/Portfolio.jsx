@@ -10,12 +10,15 @@ import {
   Eye,
   ArrowRight,
   Filter,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 const Portfolio = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [activeFilter, setActiveFilter] = useState("all");
   const [selectedProject, setSelectedProject] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef(null);
 
@@ -136,6 +139,13 @@ const Portfolio = () => {
       tags: ["Garden", "Romantic", "Flowers"],
       featured: false,
       imageColor: "from-emerald-400/20 to-green-300/15",
+      images: [
+        "/images/sandy-img1.JPG",
+        "/images/sandy-img2.JPG", 
+        "/images/sandy-img3.JPG",
+        "/images/sandy-img4.JPG",
+        "/images/sandy-img5.JPG"
+      ],
     },
     {
       id: 6,
@@ -323,7 +333,10 @@ const Portfolio = () => {
               <div
                 key={project.id}
                 className="group bg-white/70 backdrop-blur-sm border border-neutral-200/40 rounded-2xl overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
-                onClick={() => setSelectedProject(project)}
+                onClick={() => {
+                  setSelectedProject(project);
+                  setCurrentImageIndex(0);
+                }}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Project Image */}
@@ -413,11 +426,14 @@ const Portfolio = () => {
         </div>
       </div>
 
-      {/* Project Modal Preview - Simplified for this example */}
+      {/* Project Modal Preview */}
       {selectedProject && (
         <div
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-6"
-          onClick={() => setSelectedProject(null)}
+          onClick={() => {
+            setSelectedProject(null);
+            setCurrentImageIndex(0);
+          }}
         >
           <div
             className="bg-white rounded-3xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
@@ -427,11 +443,82 @@ const Portfolio = () => {
               <h3 className="text-2xl font-bold text-neutral-800">
                 {selectedProject.title}
               </h3>
-              <div
-                className={`h-64 bg-gradient-to-br ${selectedProject.imageColor} rounded-2xl flex items-center justify-center`}
-              >
-                <div className="text-6xl">📸</div>
-              </div>
+              
+              {/* Image Gallery */}
+              {selectedProject.images ? (
+                <div className="relative">
+                  <div className="h-64 rounded-2xl overflow-hidden bg-neutral-100">
+                    <img
+                      src={selectedProject.images[currentImageIndex]}
+                      alt={`${selectedProject.title} - Photo ${currentImageIndex + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  {/* Navigation Arrows */}
+                  {selectedProject.images.length > 1 && (
+                    <>
+                      <button
+                        onClick={() => setCurrentImageIndex(
+                          currentImageIndex === 0 
+                            ? selectedProject.images.length - 1 
+                            : currentImageIndex - 1
+                        )}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-700 hover:text-primary-600 hover:bg-white hover:cursor-pointer transition-all duration-300 shadow-lg"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={() => setCurrentImageIndex(
+                          currentImageIndex === selectedProject.images.length - 1 
+                            ? 0 
+                            : currentImageIndex + 1
+                        )}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-700 hover:text-primary-600 hover:bg-white hover:cursor-pointer transition-all duration-300 shadow-lg"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
+                    </>
+                  )}
+                  
+                  {/* Image Counter */}
+                  {selectedProject.images.length > 1 && (
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
+                      {currentImageIndex + 1} / {selectedProject.images.length}
+                    </div>
+                  )}
+                  
+                  {/* Thumbnail Navigation */}
+                  {selectedProject.images.length > 1 && (
+                    <div className="flex justify-center space-x-2 mt-4">
+                      {selectedProject.images.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentImageIndex(index)}
+                          className={`w-12 h-8 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:cursor-pointer ${
+                            index === currentImageIndex
+                              ? "border-primary-500 shadow-md"
+                              : "border-neutral-200 hover:border-primary-300"
+                          }`}
+                        >
+                          <img
+                            src={selectedProject.images[index]}
+                            alt={`Thumbnail ${index + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div
+                  className={`h-64 bg-gradient-to-br ${selectedProject.imageColor} rounded-2xl flex items-center justify-center`}
+                >
+                  <div className="text-6xl">📸</div>
+                </div>
+              )}
+              
               <p className="text-neutral-600">{selectedProject.description}</p>
               <div className="bg-primary-50 rounded-xl p-4">
                 <p className="text-sm italic text-neutral-700">
@@ -439,8 +526,11 @@ const Portfolio = () => {
                 </p>
               </div>
               <button
-                onClick={() => setSelectedProject(null)}
-                className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-all duration-300"
+                onClick={() => {
+                  setSelectedProject(null);
+                  setCurrentImageIndex(0);
+                }}
+                className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg hover:cursor-pointer transition-all duration-300"
               >
                 Close
               </button>
