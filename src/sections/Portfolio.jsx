@@ -388,7 +388,86 @@ const Portfolio = () => {
                 <div
                   className={`h-48 bg-gradient-to-br ${project.imageColor} relative overflow-hidden flex items-center justify-center`}
                 >
-                  <div className="text-3xl">📷</div>
+                  {project.images ? (
+                    <div className="relative w-full h-full group">
+                      <img
+                        src={project.images[currentImageIndex % project.images.length]}
+                        alt={`${project.title} - Photo ${(currentImageIndex % project.images.length) + 1}`}
+                        className="w-full h-full object-cover transition-all duration-500"
+                      />
+                      
+                      {/* Slider Controls */}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300">
+                        {/* Navigation Arrows */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentImageIndex(
+                              currentImageIndex === 0 
+                                ? project.images.length - 1 
+                                : currentImageIndex - 1
+                            );
+                          }}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-700 hover:text-primary-600 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg"
+                        >
+                          <ChevronLeft className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentImageIndex(
+                              currentImageIndex === project.images.length - 1 
+                                ? 0 
+                                : currentImageIndex + 1
+                            );
+                          }}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-700 hover:text-primary-600 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg"
+                        >
+                          <ChevronRight className="w-4 h-4" />
+                        </button>
+                        
+                        {/* Play/Pause Button */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setIsSliderPlaying(!isSliderPlaying);
+                          }}
+                          className="absolute top-2 right-2 w-8 h-8 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                        >
+                          {isSliderPlaying ? (
+                            <Pause className="w-3 h-3" />
+                          ) : (
+                            <Play className="w-3 h-3 ml-0.5" />
+                          )}
+                        </button>
+                        
+                        {/* Image Counter */}
+                        <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-sm rounded-full px-2 py-1 text-white text-xs opacity-0 group-hover:opacity-100 transition-all duration-300">
+                          {(currentImageIndex % project.images.length) + 1} / {project.images.length}
+                        </div>
+                      </div>
+                      
+                      {/* Progress Dots */}
+                      <div className="absolute bottom-2 right-2 flex space-x-1">
+                        {project.images.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setCurrentImageIndex(index);
+                            }}
+                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                              index === (currentImageIndex % project.images.length)
+                                ? "bg-white shadow-lg"
+                                : "bg-white/50 hover:bg-white/80"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-3xl">📷</div>
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                   <div className="absolute bottom-4 left-4 right-4">
                     <div className="flex items-center justify-between">
@@ -409,7 +488,7 @@ const Portfolio = () => {
                   </div>
 
                   {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-primary-600/0 group-hover:bg-primary-600/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                  <div className="absolute inset-0 bg-primary-600/0 group-hover:bg-primary-600/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none">
                     <div className="bg-white/90 backdrop-blur-sm rounded-full p-2">
                       <ArrowRight className="w-5 h-5 text-primary-600" />
                     </div>
