@@ -106,70 +106,6 @@ const Portfolio = () => {
 
   const portfolioProjects = [
     {
-      id: 1,
-      title: "Sarah & Michael's Garden Wedding",
-      category: "outdoor",
-      location: "Napa Valley, CA",
-      date: "June 2024",
-      guests: 150,
-      rating: 5,
-      description:
-        "An enchanting garden ceremony with golden hour portraits and romantic sunset reception.",
-      testimonial:
-        "Sarah captured every magical moment perfectly. The photos exceeded our wildest dreams!",
-      tags: ["Garden", "Golden Hour", "Romantic"],
-      featured: true,
-      imageColor: "from-green-400/20 to-primary-300/15",
-    },
-    {
-      id: 2,
-      title: "Emma & James Beach Ceremony",
-      category: "beach",
-      location: "Monterey Bay, CA",
-      date: "August 2024",
-      guests: 80,
-      rating: 5,
-      description:
-        "Intimate beachside vows with ocean breeze and stunning coastal backdrops.",
-      testimonial:
-        "The sunset photos by the ocean are absolutely breathtaking. Pure perfection!",
-      tags: ["Beach", "Intimate", "Sunset"],
-      featured: false,
-      imageColor: "from-blue-400/20 to-secondary-300/15",
-    },
-    {
-      id: 3,
-      title: "Olivia & David Vineyard Celebration",
-      category: "vineyard",
-      location: "Sonoma County, CA",
-      date: "September 2024",
-      guests: 200,
-      rating: 5,
-      description:
-        "Elegant vineyard wedding with rustic charm and spectacular wine country views.",
-      testimonial:
-        "Every single photo tells our love story beautifully. We're beyond grateful!",
-      tags: ["Vineyard", "Elegant", "Rustic"],
-      featured: true,
-      imageColor: "from-purple-400/20 to-accent-300/15",
-    },
-    {
-      id: 4,
-      title: "Sophia & Ryan City Wedding",
-      category: "urban",
-      location: "San Francisco, CA",
-      date: "October 2024",
-      guests: 120,
-      rating: 5,
-      description:
-        "Modern urban ceremony with skyline views and sophisticated city elegance.",
-      testimonial:
-        "Sarah's artistic eye captured the urban romance we envisioned perfectly.",
-      tags: ["Urban", "Modern", "Skyline"],
-      featured: false,
-      imageColor: "from-gray-400/20 to-primary-300/15",
-    },
-    {
       id: 5,
       title: "Sandy & Henry Garden Wedding",
       category: "outdoor",
@@ -191,38 +127,6 @@ const Portfolio = () => {
         "/images/sandy-img4.JPG",
         "/images/sandy-img5.JPG"
       ],
-    },
-    {
-      id: 6,
-      title: "Isabella & Marcus Forest Wedding",
-      category: "outdoor",
-      location: "Redwood National Park, CA",
-      date: "May 2024",
-      guests: 100,
-      rating: 5,
-      description:
-        "Magical forest ceremony surrounded by towering redwoods and natural beauty.",
-      testimonial:
-        "The forest setting created such a fairytale atmosphere. Absolutely stunning!",
-      tags: ["Forest", "Natural", "Magical"],
-      featured: false,
-      imageColor: "from-green-400/20 to-secondary-300/15",
-    },
-    {
-      id: 7,
-      title: "Grace & Alexander Manor Wedding",
-      category: "indoor",
-      location: "Historic Manor, Napa",
-      date: "November 2024",
-      guests: 180,
-      rating: 5,
-      description:
-        "Classic indoor celebration with timeless elegance and vintage charm.",
-      testimonial:
-        "Every detail was captured with such artistry and attention. Perfection!",
-      tags: ["Classic", "Indoor", "Elegant"],
-      featured: true,
-      imageColor: "from-amber-400/20 to-accent-300/15",
     },
   ];
 
