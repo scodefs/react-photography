@@ -407,6 +407,27 @@ const Portfolio = () => {
                                 ? project.images.length - 1 
                                 : currentImageIndex - 1
                             );
+                          }}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-700 hover:text-primary-600 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-300"
+                        >
+                          <ChevronLeft className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setCurrentImageIndex(
+                              currentImageIndex === project.images.length - 1 
+                                ? 0 
+                                : currentImageIndex + 1
+                            );
+                          }}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-700 hover:text-primary-600 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-300"
+                        >
+                          <ChevronRight className="w-4 h-4" />
+                        </button>
+                        
+                        {/* Image Counter */}
+                        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
                           {/* Image Counter */}
                           <div className="bg-black/60 backdrop-blur-sm rounded-full px-3 py-1 text-white text-xs">
                             {currentImageIndex + 1} / {selectedProject.images.length}
