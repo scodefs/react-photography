@@ -110,7 +110,7 @@ const Portfolio = () => {
       title: "Sandy & Henry Garden Wedding",
       category: "outdoor",
       location: "Botanical Gardens, London",
-      date: "July 2024",
+      date: "July 2025",
       guests: 120,
       rating: 5,
       description:
