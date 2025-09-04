@@ -12,6 +12,8 @@ import {
   Filter,
   ChevronLeft,
   ChevronRight,
+  Play,
+  Pause,
 } from "lucide-react";
 
 const Portfolio = () => {
@@ -19,8 +21,10 @@ const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState("all");
   const [selectedProject, setSelectedProject] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isSliderPlaying, setIsSliderPlaying] = useState(true);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const sectionRef = useRef(null);
+  const sliderIntervalRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -51,6 +55,47 @@ const Portfolio = () => {
       observer.disconnect();
     };
   }, []);
+
+  // Auto-slider effect
+  useEffect(() => {
+    if (selectedProject && selectedProject.images && isSliderPlaying) {
+      sliderIntervalRef.current = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => 
+          prevIndex === selectedProject.images.length - 1 ? 0 : prevIndex + 1
+        );
+      }, 3000); // Change image every 3 seconds
+    }
+
+    return () => {
+      if (sliderIntervalRef.current) {
+        clearInterval(sliderIntervalRef.current);
+      }
+    };
+  }, [selectedProject, isSliderPlaying]);
+
+  const toggleSlider = () => {
+    setIsSliderPlaying(!isSliderPlaying);
+  };
+
+  const goToNextImage = () => {
+    if (selectedProject && selectedProject.images) {
+      setCurrentImageIndex(
+        currentImageIndex === selectedProject.images.length - 1 
+          ? 0 
+          : currentImageIndex + 1
+      );
+    }
+  };
+
+  const goToPrevImage = () => {
+    if (selectedProject && selectedProject.images) {
+      setCurrentImageIndex(
+        currentImageIndex === 0 
+          ? selectedProject.images.length - 1 
+          : currentImageIndex - 1
+      );
+    }
+  };
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -433,6 +478,7 @@ const Portfolio = () => {
           onClick={() => {
             setSelectedProject(null);
             setCurrentImageIndex(0);
+            setIsSliderPlaying(true);
           }}
         >
           <div
@@ -447,45 +493,63 @@ const Portfolio = () => {
               {/* Image Gallery */}
               {selectedProject.images ? (
                 <div className="relative">
-                  <div className="h-64 rounded-2xl overflow-hidden bg-neutral-100">
+                  <div className="h-64 rounded-2xl overflow-hidden bg-neutral-100 relative">
                     <img
                       src={selectedProject.images[currentImageIndex]}
                       alt={`${selectedProject.title} - Photo ${currentImageIndex + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-all duration-500"
                     />
+                    
+                    {/* Slider Controls Overlay */}
+                    <div className="absolute top-4 right-4 flex items-center space-x-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleSlider();
+                        }}
+                        className="w-10 h-10 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 hover:cursor-pointer transition-all duration-300"
+                      >
+                        {isSliderPlaying ? (
+                          <Pause className="w-4 h-4" />
+                        ) : (
+                          <Play className="w-4 h-4 ml-0.5" />
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/20">
+                      <div 
+                        className="h-full bg-gradient-to-r from-primary-500 to-secondary-500 transition-all duration-300"
+                        style={{ 
+                          width: `${((currentImageIndex + 1) / selectedProject.images.length) * 100}%` 
+                        }}
+                      />
+                    </div>
                   </div>
                   
                   {/* Navigation Arrows */}
                   {selectedProject.images.length > 1 && (
                     <>
                       <button
-                        onClick={() => setCurrentImageIndex(
-                          currentImageIndex === 0 
-                            ? selectedProject.images.length - 1 
-                            : currentImageIndex - 1
-                        )}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          goToPrevImage();
+                        }}
                         className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-700 hover:text-primary-600 hover:bg-white hover:cursor-pointer transition-all duration-300 shadow-lg"
                       >
                         <ChevronLeft className="w-5 h-5" />
                       </button>
                       <button
-                        onClick={() => setCurrentImageIndex(
-                          currentImageIndex === selectedProject.images.length - 1 
-                            ? 0 
-                            : currentImageIndex + 1
-                        )}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          goToNextImage();
+                        }}
                         className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-700 hover:text-primary-600 hover:bg-white hover:cursor-pointer transition-all duration-300 shadow-lg"
                       >
                         <ChevronRight className="w-5 h-5" />
                       </button>
                     </>
-                  )}
-                  
-                  {/* Image Counter */}
-                  {selectedProject.images.length > 1 && (
-                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium">
-                      {currentImageIndex + 1} / {selectedProject.images.length}
-                    </div>
                   )}
                   
                   {/* Thumbnail Navigation */}
@@ -494,7 +558,6 @@ const Portfolio = () => {
                       {selectedProject.images.map((_, index) => (
                         <button
                           key={index}
-                          onClick={() => setCurrentImageIndex(index)}
                           className={`w-12 h-8 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:cursor-pointer ${
                             index === currentImageIndex
                               ? "border-primary-500 shadow-md"
