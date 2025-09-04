@@ -122,7 +122,7 @@ const Portfolio = () => {
       imageColor: "from-emerald-400/20 to-green-300/15",
       images: [
         "/images/sandy-img1.JPG",
-        "/images/sandy-img2.JPG", 
+        "/images/sandy-img2.JPG",
         "/images/sandy-img3.JPG",
         "/images/sandy-img4.JPG",
         "/images/sandy-img5.JPG"
