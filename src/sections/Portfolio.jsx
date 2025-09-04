@@ -430,7 +430,7 @@ const Portfolio = () => {
                         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
                           {/* Image Counter */}
                           <div className="bg-black/60 backdrop-blur-sm rounded-full px-3 py-1 text-white text-xs">
-                            {currentImageIndex + 1} / {selectedProject.images.length}
+                            {currentImageIndex + 1} / {project.images.length}
                           </div>
                         </div>
                       </div>
