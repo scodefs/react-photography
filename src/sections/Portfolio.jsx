@@ -278,120 +278,164 @@ const Portfolio = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project, index) => (
-              <div
-                key={project.id}
-                className="group bg-white/70 backdrop-blur-sm border border-neutral-200/40 rounded-2xl overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
-                onClick={() => {
-                  setSelectedProject(project);
-                  setCurrentImageIndex(0);
-                }}
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                {/* Project Image */}
+            {filteredProjects.length > 0 ? (
+              filteredProjects.map((project, index) => (
                 <div
-                  className={`h-48 bg-gradient-to-br ${project.imageColor} relative overflow-hidden flex items-center justify-center`}
+                  key={project.id}
+                  className="group bg-white/70 backdrop-blur-sm border border-neutral-200/40 rounded-2xl overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
+                  onClick={() => {
+                    setSelectedProject(project);
+                    setCurrentImageIndex(0);
+                  }}
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  {project.images ? (
-                    <div className="relative w-full h-full group">
-                      <img
-                        src={project.images[currentImageIndex % project.images.length]}
-                        alt={`${project.title} - Photo ${(currentImageIndex % project.images.length) + 1}`}
-                        className="w-full h-full object-cover transition-all duration-500"
-                      />
-                      
-                      {/* Slider Controls */}
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300">
-                        {/* Navigation Arrows */}
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCurrentImageIndex(
-                              currentImageIndex === 0 
-                                ? project.images.length - 1 
-                                : currentImageIndex - 1
-                            );
-                          }}
-                          className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-700 hover:text-primary-600 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-300"
-                        >
-                          <ChevronLeft className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setCurrentImageIndex(
-                              currentImageIndex === project.images.length - 1 
-                                ? 0 
-                                : currentImageIndex + 1
-                            );
-                          }}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-700 hover:text-primary-600 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-300"
-                        >
-                          <ChevronRight className="w-4 h-4" />
-                        </button>
+                  {/* Project Image */}
+                  <div
+                    className={`h-48 bg-gradient-to-br ${project.imageColor} relative overflow-hidden flex items-center justify-center`}
+                  >
+                    {project.images ? (
+                      <div className="relative w-full h-full group">
+                        <img
+                          src={project.images[currentImageIndex % project.images.length]}
+                          alt={`${project.title} - Photo ${(currentImageIndex % project.images.length) + 1}`}
+                          className="w-full h-full object-cover transition-all duration-500"
+                        />
                         
-                        {/* Image Counter */}
-                        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                        {/* Slider Controls */}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300">
+                          {/* Navigation Arrows */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setCurrentImageIndex(
+                                currentImageIndex === 0 
+                                  ? project.images.length - 1 
+                                  : currentImageIndex - 1
+                              );
+                            }}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-700 hover:text-primary-600 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-300"
+                          >
+                            <ChevronLeft className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setCurrentImageIndex(
+                                currentImageIndex === project.images.length - 1 
+                                  ? 0 
+                                  : currentImageIndex + 1
+                              );
+                            }}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-neutral-700 hover:text-primary-600 hover:bg-white opacity-0 group-hover:opacity-100 transition-all duration-300"
+                          >
+                            <ChevronRight className="w-4 h-4" />
+                          </button>
+                          
                           {/* Image Counter */}
-                          <div className="bg-black/60 backdrop-blur-sm rounded-full px-3 py-1 text-white text-xs">
-                            {currentImageIndex + 1} / {project.images.length}
+                          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                            {/* Image Counter */}
+                            <div className="bg-black/60 backdrop-blur-sm rounded-full px-3 py-1 text-white text-xs">
+                              {currentImageIndex + 1} / {project.images.length}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="text-3xl">📷</div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="flex items-center justify-between">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
-                        <span className="text-xs font-bold text-neutral-800">
-                          {project.date}
-                        </span>
+                    ) : (
+                      <div className="text-3xl">📷</div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <div className="flex items-center justify-between">
+                        <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                          <span className="text-xs font-bold text-neutral-800">
+                            {project.date}
+                          </span>
+                        </div>
+                        <div className="flex space-x-1">
+                          {[...Array(project.rating)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className="w-3 h-3 text-yellow-400 fill-current"
+                            />
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex space-x-1">
-                        {[...Array(project.rating)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className="w-3 h-3 text-yellow-400 fill-current"
-                          />
-                        ))}
+                    </div>
+
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-primary-600/0 group-hover:bg-primary-600/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-full p-2">
+                        <ArrowRight className="w-5 h-5 text-primary-600" />
                       </div>
                     </div>
                   </div>
 
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-primary-600/0 group-hover:bg-primary-600/20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none">
-                    <div className="bg-white/90 backdrop-blur-sm rounded-full p-2">
-                      <ArrowRight className="w-5 h-5 text-primary-600" />
+                  {/* Project Details */}
+                  <div className="p-6 space-y-3">
+                    <h4 className="font-bold text-lg text-neutral-800 group-hover:text-primary-600 transition-colors line-clamp-2">
+                      {project.title}
+                    </h4>
+
+                    <p className="text-sm text-neutral-600 line-clamp-2">
+                      {project.description}
+                    </p>
+
+                    <div className="flex items-center justify-between pt-2">
+                      <div className="flex items-center space-x-1 text-xs text-neutral-500">
+                        <MapPin className="w-3 h-3" />
+                        <span>{project.location}</span>
+                      </div>
+                      <div className="flex items-center space-x-1 text-xs text-neutral-500">
+                        <Users className="w-3 h-3" />
+                        <span>{project.guests}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                {/* Project Details */}
-                <div className="p-6 space-y-3">
-                  <h4 className="font-bold text-lg text-neutral-800 group-hover:text-primary-600 transition-colors line-clamp-2">
-                    {project.title}
-                  </h4>
-
-                  <p className="text-sm text-neutral-600 line-clamp-2">
-                    {project.description}
-                  </p>
-
-                  <div className="flex items-center justify-between pt-2">
-                    <div className="flex items-center space-x-1 text-xs text-neutral-500">
-                      <MapPin className="w-3 h-3" />
-                      <span>{project.location}</span>
-                    </div>
-                    <div className="flex items-center space-x-1 text-xs text-neutral-500">
-                      <Users className="w-3 h-3" />
-                      <span>{project.guests}</span>
-                    </div>
-                  </div>
+              ))
+            ) : (
+              /* Coming Soon Message */
+              <div
+                className="col-span-full flex flex-col items-center justify-center py-20 px-8"
+              >
+                {/* Coming Soon Icon */}
+                <div className="w-24 h-24 bg-gradient-to-br from-primary-500/20 to-secondary-500/15 rounded-3xl flex items-center justify-center mb-8 animate-pulse">
+                  <Camera className="w-12 h-12 text-primary-600/60" />
                 </div>
+                
+                {/* Coming Soon Text */}
+                <h3 className="text-3xl font-bold text-neutral-800 mb-4">
+                  <span className="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                    Coming Soon
+                  </span>
+                </h3>
+                
+                <p className="text-lg text-neutral-600 text-center max-w-md leading-relaxed mb-8">
+                  We're currently working on capturing beautiful {" "}
+                  {filterCategories.find((c) => c.id === activeFilter)?.name.toLowerCase()} {" "}
+                  weddings. Check back soon for stunning new additions to our portfolio!
+                </p>
+                
+                {/* Decorative Elements */}
+                <div className="flex items-center justify-center space-x-4">
+                  <div className="w-2 h-2 bg-primary-400/60 rounded-full animate-bounce" />
+                  <div className="w-2 h-2 bg-secondary-400/60 rounded-full animate-bounce delay-100" />
+                  <div className="w-2 h-2 bg-accent-400/60 rounded-full animate-bounce delay-200" />
+                </div>
+                
+                {/* CTA Button */}
+                <div className="mt-8">
+                  <button
+                    className="btn-primary inline-flex items-center space-x-2"
+                    onClick={() => scrollToSection("services")}
+                  >
+                    <Heart className="w-5 h-5" />
+                    <span>Book Your Wedding</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                  </div>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
