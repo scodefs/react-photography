@@ -549,23 +549,6 @@ const Portfolio = () => {
                       className="w-full h-full object-cover transition-all duration-500"
                     />
                     
-                    {/* Slider Controls Overlay */}
-                    <div className="absolute top-4 right-4 flex items-center space-x-2">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleSlider();
-                        }}
-                        className="w-10 h-10 bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 hover:cursor-pointer transition-all duration-300"
-                      >
-                        {isSliderPlaying ? (
-                          <Pause className="w-4 h-4" />
-                        ) : (
-                          <Play className="w-4 h-4 ml-0.5" />
-                        )}
-                      </button>
-                    </div>
-
                     {/* Progress Bar */}
                     <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/20">
                       <div 
